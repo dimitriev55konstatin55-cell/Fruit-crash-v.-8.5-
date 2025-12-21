@@ -1399,7 +1399,7 @@ const App: React.FC = () => {
 
       // Game Screen Background Updated
       return (
-        <div onClick={unlockAudio} className={`fixed inset-0 bg-slate-100 flex flex-col items-center p-4 overflow-hidden select-none z-10 touch-none`} style={{paddingTop: 'max(1rem, env(safe-area-inset-top))', paddingBottom: 'max(1rem, env(safe-area-inset-bottom))'}}>
+        <div onClick={unlockAudio} className={`fixed inset-0 flex flex-col items-center p-4 overflow-hidden select-none z-10 touch-none`} style={{paddingTop: 'max(1rem, env(safe-area-inset-top))', paddingBottom: 'max(1rem, env(safe-area-inset-bottom))'}}>
           {/* Audio Element Hidden */}
           <audio 
             ref={audioRef} 
