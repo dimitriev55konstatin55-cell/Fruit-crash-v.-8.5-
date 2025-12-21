@@ -17,7 +17,9 @@ export interface Achievement {
   groupId: string; // ID группы (например, 'red_collection')
   level: number;   // Уровень достижения (1-5)
   title: string;
+  titleEn?: string;
   description: string;
+  descriptionEn?: string;
   unlocked: boolean;
   claimed: boolean; // Получена ли награда
   requirement: number;
@@ -59,7 +61,9 @@ export interface GameState {
   level: number;
   levelType: LevelType;
   objective: string;
+  objectiveEn?: string;
   storySegment: string;
+  storyEn?: string;
   targetScore: number;
   targetFruits: TargetFruit[];
   jars: Record<CandyColor, number>;
