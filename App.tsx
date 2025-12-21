@@ -603,9 +603,11 @@ const App: React.FC = () => {
     }
 
     setGameState(prev => ({
-      ...prev, level, objective: data?.objective || `${t('level')} ${level}`,
+      ...prev, level, objective: data?.objectiveRu || `${t('level')} ${level}`, 
+      objectiveEn: data?.objectiveEn || `Level ${level}`,
       levelType: data?.levelType || 'collect',
-      storySegment: data?.storySegment || "...",
+      storySegment: data?.storyRu || "...",
+      storyEn: data?.storyEn || "...",
       targetScore: typeof data?.targetScore === 'number' ? data.targetScore : 500 + (level * 100),
       targetFruits: validTargetFruits, board: createBoard(), 
       moves: Math.max(15, 35 - Math.floor(level / 3)), 
@@ -1314,6 +1316,7 @@ const App: React.FC = () => {
                     </div>
                     <div className="flex-1">
                       <h3 className="game-font text-lg leading-tight flex justify-between ui-text-shadow">
+                        {gameState.settings.language === 'en' ? (ach.titleEn || ach.title) : ach.title}
                         {ach.title}
                         {ach.claimed ? 
                             <span className="text-green-500 text-sm flex items-center gap-1">{t('claimed')}</span>
@@ -1321,7 +1324,9 @@ const App: React.FC = () => {
                             <span className="text-yellow-400 text-sm flex items-center gap-1"><Coins size={12}/> +{ach.reward}</span>
                         }
                       </h3>
-                      <p className="text-slate-400 text-xs mt-1">{ach.description}</p>
+                     <p className="text-slate-400 text-xs mt-1">
+                         {gameState.settings.language === 'en' ? (ach.descriptionEn || ach.description) : ach.description}
+                      </p>
                     </div>
                   </div>
                   <div className="mt-4">
