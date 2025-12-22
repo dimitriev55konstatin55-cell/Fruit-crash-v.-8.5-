@@ -339,7 +339,7 @@ const App: React.FC = () => {
   const [showInventoryModal, setShowInventoryModal] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
   const [hintData, setHintData] = useState<{ swap: number[], match: number[] } | null>(null);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(Math.floor(Math.random() * 3));
   const [isShuffling, setIsShuffling] = useState(false);
   
   const touchStartRef = useRef<{ x: number, y: number, id: number } | null>(null);
@@ -451,11 +451,10 @@ const App: React.FC = () => {
   }, []);
 
   const unlockAudio = useCallback(() => {
-    console.log(hasInteractedRef.current)
     if (hasInteractedRef.current) return;
     
     hasInteractedRef.current = true;
-    audioRef.current = new Audio('https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/rock.mp3')
+    audioRef.current = new Audio(MUSIC[currentTrackIndex])
     
     // Play Background Music Logic
     if (audioRef.current) {
