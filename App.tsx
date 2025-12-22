@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { GameState, CandyColor, Achievement, TargetFruit, Inventory, GameStats, LevelType } from './types';
 import { 
@@ -18,6 +17,31 @@ import {
 
 const STORAGE_KEY = 'fruit_crash_save_v7_ls'; 
 const ACHIEVEMENTS_KEY = 'fruit_crash_achievements_v5_ls';
+
+// --- ANALYTICS CONFIG (GRASPIL) ---
+const GRASPIL_KEY = "ea778f5861556cffee1d5204ab10d4d8";
+
+// Функция отправки событий
+const trackLevel = async (userId: number, eventName: 'level_start' | 'level_win' | 'level_lose', levelNumber: number) => {
+  try {
+    // Не отправляем данные, если тестируем на локальном компьютере (localhost)
+    if (window.location.hostname === 'localhost') return; 
+
+    await fetch("https://api.graspil.com/v1/event", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        api_key: GRASPIL_KEY,
+        user_id: userId,
+        event: eventName,
+        params: { level: levelNumber }
+      })
+    });
+    console.log(`[Graspil] ${eventName} (Level ${levelNumber}) отправлено для юзера ${userId}`);
+  } catch (e) {
+    console.error("Analytics error:", e);
+  }
+};
 
 // --- IMAGES ---
 
@@ -353,6 +377,14 @@ const App: React.FC = () => {
   const sfxRef = useRef<Record<string, HTMLAudioElement>>({});
   const hasInteractedRef = useRef(false);
 
+  // --- ANALYTICS: GET TELEGRAM USER ID ---
+  // Получаем ID игрока (или фейковый 777777, если открыто в браузере)
+  const tgUserId = useMemo(() => {
+    try {
+        return (window as any).Telegram?.WebApp?.initDataUnsafe?.user?.id || 777777;
+    } catch(e) { return 777777; }
+  }, []);
+
   // Helper for Translation
   const t = (key: keyof typeof TRANSLATIONS.ru) => {
     const lang = gameState.settings.language || 'ru';
@@ -646,6 +678,10 @@ const App: React.FC = () => {
   useEffect(() => {
     // FIX: Trigger reward even if still processing, but wait to show screen
     if (gameState.screen === 'game' && isLevelComplete && !rewardClaimed) {
+        
+        // --- ANALYTICS: TRACK WIN ---
+        trackLevel(tgUserId, 'level_win', gameState.level);
+        
         const reward = Math.floor(Math.random() * 11) + 10; 
         setGameState(prev => ({
             ...prev, coinsFromLevels: prev.coinsFromLevels + reward, lastLevelReward: reward, isProcessing: false 
@@ -654,9 +690,13 @@ const App: React.FC = () => {
         playSFX('win');
     }
     if (!isLevelComplete) setRewardClaimed(false);
-  }, [isLevelComplete, gameState.screen, rewardClaimed]);
+  }, [isLevelComplete, gameState.screen, rewardClaimed, tgUserId]);
 
   const prepareLevel = useCallback(async (level: number) => {
+    
+    // --- ANALYTICS: TRACK START ---
+    trackLevel(tgUserId, 'level_start', level);
+
     setLoadingText(t('loading'));
     setGameState(prev => ({ ...prev, screen: 'loading' }));
     
@@ -690,7 +730,7 @@ const App: React.FC = () => {
       isProcessing: false, screen: 'story', tick: 0,
       score: 0 
     }));
-  }, [t]);
+  }, [t, tgUserId]);
 
   const goToMap = () => {
     setGameState(prev => ({ ...prev, screen: 'map' }));
