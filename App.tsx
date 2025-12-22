@@ -451,9 +451,10 @@ const App: React.FC = () => {
   }, []);
 
   const unlockAudio = useCallback(() => {
+    console.log(hasInteractedRef.current)
     if (hasInteractedRef.current) return;
     hasInteractedRef.current = true;
-    audioRef = new Audio()
+    audioRef.current = new Audio()
     // Play Background Music Logic
     if (audioRef.current) {
         if (!audioRef.current.src) {
