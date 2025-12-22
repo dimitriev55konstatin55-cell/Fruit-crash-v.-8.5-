@@ -454,7 +454,7 @@ const App: React.FC = () => {
     console.log(hasInteractedRef.current)
     if (hasInteractedRef.current) return;
     hasInteractedRef.current = true;
-    audioRef.current = new Audio()
+    audioRef.current = new Audio('https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/rock.mp3')
     // Play Background Music Logic
     if (audioRef.current) {
         if (!audioRef.current.src) {
