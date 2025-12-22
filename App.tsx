@@ -451,7 +451,6 @@ const App: React.FC = () => {
   }, []);
 
   const unlockAudio = useCallback(() => {
-    if (hasInteractedRef.current) return;
     hasInteractedRef.current = true;
     
     // Play Background Music Logic
@@ -460,14 +459,12 @@ const App: React.FC = () => {
              audioRef.current.src = MUSIC[currentTrackIndex];
         }
         audioRef.current.volume = 0.3; // Lower music volume for balance
-        if (gameState.settings.musicEnabled) {
-             const playPromise = audioRef.current.play();
+        const playPromise = audioRef.current.play();
              if (playPromise !== undefined) {
                  playPromise.catch(error => {
                      console.log("Auto-play prevented (expected until interaction):", error);
                  });
              }
-        }
     }
   }, [currentTrackIndex, gameState.settings.musicEnabled]);
 
