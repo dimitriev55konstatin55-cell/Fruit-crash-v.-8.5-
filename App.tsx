@@ -494,6 +494,7 @@ const App: React.FC = () => {
              audioRef.current.src = MUSIC[currentTrackIndex];
         }
         audioRef.current.volume = 0.3; // Lower music volume for balance
+        audioRef.current.loop = true;
         const playPromise = audioRef.current.play();
              if (playPromise !== undefined) {
                  playPromise.catch(error => {
