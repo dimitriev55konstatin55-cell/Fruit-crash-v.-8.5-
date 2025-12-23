@@ -154,10 +154,7 @@ export const SHOP_ITEMS = [
   { id: 'santaBag', moves: 0, price: 2250, salePrice: 1752, title: 'Sack', titleRu: 'Мешок', desc: 'ALL Jars 100%', descRu: 'ВСЕ банки на 100%' },
 ];
 
-export const MUSIC = [
-  'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/rock.mp3', 
-  'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/wham.mp3', 
-  'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/ru.mp3', 
+export const MUSIC = [ 
   'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/mav.mp3'
   
 ];
