@@ -390,18 +390,6 @@ const App: React.FC = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const mapInteractionRef = useRef<{startX: number, startY: number} | null>(null);
-  
-
-// 🔥 ДОБАВЛЯЕМ ВОТ ЭТО: Состояние для окна Телеграма
-  const [showTgModal, setShowTgModal] = useState(() => {
-    // Проверяем, есть ли запись, что юзер уже нажал крестик
-    return !localStorage.getItem('tg_promo_closed_v1');
-});
-  const closeTgModal = () => {
-    playSFX('click');
-    localStorage.setItem('tg_promo_closed_v1', 'true'); // Запоминаем, что закрыл
-    setShowTgModal(false);
-};
 
 // ... остальные стейты ...
   // FIX: Preload Audio correctly into a Ref to prevent delay
