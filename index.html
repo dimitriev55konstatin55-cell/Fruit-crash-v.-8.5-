@@ -15,8 +15,10 @@
         };
       })();
     </script>
-    <script src="https://sdk.games.s3.yandex.net/sdk.js"></script>
-   
+    <script
+  src="https://sdk.games.s3.yandex.net/sdk.js"
+  onload="YaGames.init().then(ysdk => { window.ysdk = ysdk; console.log('YSDK ready') })">
+</script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -155,13 +157,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="index.tsx"></script>
-    <script>
-    YaGames
-    .init()
-    .then(ysdk => {
-        console.log('Yandex SDK initialized');
-        window.ysdk = ysdk;
-    });
-    </script>
   </body>
 </html>
