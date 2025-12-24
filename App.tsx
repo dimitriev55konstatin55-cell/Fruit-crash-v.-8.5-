@@ -372,7 +372,15 @@ const App: React.FC = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const mapInteractionRef = useRef<{startX: number, startY: number} | null>(null);
+  const [achievements, setAchievements] = useState<Achievement[]>(getInitialAchievements);
 
+// 🔥 ДОБАВЛЯЕМ ВОТ ЭТО: Состояние для окна Телеграма
+  const [showTgModal, setShowTgModal] = useState(() => {
+    // Проверяем, есть ли запись, что юзер уже нажал крестик
+    return !localStorage.getItem('tg_promo_closed_v1');
+});
+
+// ... остальные стейты ...
   // FIX: Preload Audio correctly into a Ref to prevent delay
   const sfxRef = useRef<Record<string, HTMLAudioElement>>({});
   const hasInteractedRef = useRef(false);
@@ -995,6 +1003,13 @@ const App: React.FC = () => {
       // Reset interaction
       mapInteractionRef.current = null;
   };
+  
+  // 🔥 Функция закрытия окна
+  const closeTgModal = () => {
+    playSFX('click');
+    localStorage.setItem('tg_promo_closed_v1', 'true'); // Запоминаем, что закрыл
+    setShowTgModal(false);
+};
 
 
   const renderScreen = () => {
@@ -1148,12 +1163,10 @@ const App: React.FC = () => {
               </div>
               
               <div className="relative mb-2">
-                 {/* BIGGER AND BRIGHTER TITLE */}
                  <h1 className="game-font text-[4.5rem] sm:text-[6rem] md:text-[7rem] lg:text-[8rem] leading-[0.9] text-blue-900 title-text absolute w-full top-0 left-0 z-0 select-none">FRUIT<br/>CRASH</h1>
                  <h1 className="game-font text-[4.5rem] sm:text-[6rem] md:text-[7rem] lg:text-[8rem] leading-[0.9] title-gradient relative z-10 select-none">FRUIT<br/>CRASH</h1>
               </div>
 
-              {/* Smaller Subtitle */}
               <div className="text-blue-900 font-black tracking-widest text-sm mt-4 uppercase bg-white/60 inline-block px-4 py-1 rounded-full border border-white/50 backdrop-blur-sm shadow-sm">
                   {t('season_subtitle')}
               </div>
@@ -1174,6 +1187,51 @@ const App: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            {/* 🔥🔥🔥 ВСТАВКА: МОДАЛЬНОЕ ОКНО ТЕЛЕГРАМА 🔥🔥🔥 */}
+            {showTgModal && (
+              <div className="absolute inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-300" onClick={(e) => e.stopPropagation()}>
+                <div className="bg-white rounded-[2rem] p-6 max-w-xs w-full relative text-center border-4 border-blue-500 shadow-2xl animate-scale-up">
+                    
+                    {/* Кнопка "Закрыть вкладку" (Крестик) */}
+                    <button 
+                        onClick={closeTgModal}
+                        className="absolute -top-3 -right-3 bg-red-500 hover:bg-red-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-lg border-2 border-white active:scale-95 transition-transform z-10"
+                    >
+                        ✕
+                    </button>
+
+                    {/* Иконка */}
+                    <div className="mb-4 flex justify-center animate-bounce">
+                        <div className="w-20 h-20 bg-blue-400 rounded-full flex items-center justify-center shadow-lg border-4 border-blue-100">
+                            <svg viewBox="0 0 24 24" fill="white" className="w-10 h-10 ml-[-2px]">
+                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.361 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.008-1.252-.241-1.865-.44-.751-.244-1.349-.374-1.297-.789.027-.216.324-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.141.119.098.152.228.166.331.016.119.034.296.026.435z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <h3 className="game-font text-2xl text-blue-600 mb-2 ui-text-shadow leading-none">
+                        ОЦЕНИ ИГРУ!
+                    </h3>
+                    
+                    <p className="text-slate-600 font-bold text-sm mb-6 leading-tight">
+                        Оцените игру в официальном телеграм канале
+                    </p>
+
+                    <a 
+                        href="https://t.me/ТВОЯ_ССЫЛКА" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        onClick={() => playSFX('click')}
+                        className="block w-full bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 rounded-xl shadow-[0_4px_0_rgb(29,78,216)] active:translate-y-1 active:shadow-none transition-all btn-press uppercase tracking-wider no-underline"
+                    >
+                        ПЕРЕЙТИ
+                    </a>
+                </div>
+              </div>
+            )}
+            {/* 🔥🔥🔥 КОНЕЦ ВСТАВКИ 🔥🔥🔥 */}
+
           </div>
         );
       }
