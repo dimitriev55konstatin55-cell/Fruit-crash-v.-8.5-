@@ -23,7 +23,7 @@ const ACHIEVEMENTS_KEY = 'fruit_crash_achievements_v5_ls';
 
 const CoinIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
     <img 
-        src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Coin.png"
+        src="image/coin.png"
         alt="Coin"
         width={size} 
         height={size}
@@ -34,7 +34,7 @@ const CoinIcon = ({ size = 20, className = "" }: { size?: number, className?: st
 
 const SantaIcon = ({ size = 40 }: { size?: number }) => (
     <img 
-        src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Santa%20Claus.png"
+        src="image/santa_claus.png"
         alt="Santa"
         width={size}
         height={size}
@@ -46,7 +46,7 @@ const SantaIcon = ({ size = 40 }: { size?: number }) => (
 // Replaced SVG Gift with 3D Image
 const GiftIcon = ({ size = 40 }: { size?: number }) => (
     <img 
-        src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Wrapped%20Gift.png"
+        src="image/gift.png"
         alt="Gift"
         width={size}
         height={size}
@@ -60,22 +60,22 @@ const ShopItemImage = ({ id, size = 50 }: { id: string, size?: number }) => {
     let src = "";
     switch(id) {
         case 'smallPack': // Mandarin
-            src = "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food/Tangerine.png";
+            src = "image/Tangerine.png";
             break;
         case 'mediumPack': // Gift
-            src = "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Wrapped%20Gift.png";
+            src = "image/gift1.png";
             break;
         case 'largePack': // Sleigh -> Replaced with Deer (Reindeer) as Sled image was broken
-            src = "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Deer.png";
+            src = "image/deer.png";
             break;
         case 'magicSnowflake': // Snowflake
-            src = "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Snowflake.png";
+            src = "image/snowflake.png";
             break;
         case 'santaBag': // Sack (Money Bag as proxy for Sack)
-            src = "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Money%20Bag.png";
+            src = "image/money_bag.png";
             break;
         default: 
-            src = "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Wrapped%20Gift.png";
+            src = "image/gift2.png";
     }
 
     return (
