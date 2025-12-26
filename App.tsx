@@ -18,30 +18,6 @@ import {
 const STORAGE_KEY = 'fruit_crash_save_v7_ls'; 
 const ACHIEVEMENTS_KEY = 'fruit_crash_achievements_v5_ls';
 
-// --- ANALYTICS CONFIG (GRASPIL) ---
-const GRASPIL_KEY = "ea778f5861556cffee1d5204ab10d4d8";
-
-// Функция отправки событий
-const trackLevel = async (userId: number, eventName: 'level_start' | 'level_win' | 'level_lose', levelNumber: number) => {
-  try {
-    // Не отправляем данные, если тестируем на локальном компьютере (localhost)
-    if (window.location.hostname === 'localhost') return; 
-
-    await fetch("https://api.graspil.com/v1/event", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        api_key: GRASPIL_KEY,
-        user_id: userId,
-        event: eventName,
-        params: { level: levelNumber }
-      })
-    });
-    console.log(`[Graspil] ${eventName} (Level ${levelNumber}) отправлено для юзера ${userId}`);
-  } catch (e) {
-    console.error("Analytics error:", e);
-  }
-};
 
 // --- IMAGES ---
 
@@ -387,6 +363,7 @@ const App: React.FC = () => {
         return (window as any).Telegram?.WebApp?.initDataUnsafe?.user?.id || 777777;
     } catch(e) { return 777777; }
   }, []);
+  console.log(tgUserId);
 
   // Helper for Translation
   const t = (key: keyof typeof TRANSLATIONS.ru) => {
@@ -683,8 +660,6 @@ const App: React.FC = () => {
     // FIX: Trigger reward even if still processing, but wait to show screen
     if (gameState.screen === 'game' && isLevelComplete && !rewardClaimed) {
         
-        // --- ANALYTICS: TRACK WIN ---
-        trackLevel(tgUserId, 'level_win', gameState.level);
         
         const reward = Math.floor(Math.random() * 11) + 10; 
         setGameState(prev => ({
@@ -698,8 +673,7 @@ const App: React.FC = () => {
 
   const prepareLevel = useCallback(async (level: number) => {
     
-    // --- ANALYTICS: TRACK START ---
-    trackLevel(tgUserId, 'level_start', level);
+    
 
     setLoadingText(t('loading'));
     setGameState(prev => ({ ...prev, screen: 'loading' }));
