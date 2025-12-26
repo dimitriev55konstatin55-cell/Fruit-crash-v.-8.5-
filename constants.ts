@@ -155,18 +155,18 @@ export const SHOP_ITEMS = [
 ];
 
 export const MUSIC = [ 
-  'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/mav.mp3'
+  'music/mav.mp3'
   
 ];
 
 export const SFX = {
-  click: 'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/click.wav', 
-  swap: 'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/swap.wav', 
-  match: 'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/match.wav', 
-  win: 'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/win.wav', 
-  lose: 'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/lose.wav', 
-  coin: 'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/coin.wav', 
-  buy: 'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/buy.mp3' 
+  click: 'music/click.wav', 
+  swap: 'music/swap.wav', 
+  match: 'music/match.wav', 
+  win: 'music/win.wav', 
+  lose: 'music/lose.wav', 
+  coin: 'music/coin.wav', 
+  buy: 'music/buy.mp3' 
 };
 
 // Helper to generate tiered achievements with translations
